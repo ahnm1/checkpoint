@@ -1,4 +1,6 @@
 import psycopg2
+
+# Configure connection to PostgreSQL
 conn = psycopg2.connect(
    host="localhost",
    database="dictionary",
@@ -6,6 +8,7 @@ conn = psycopg2.connect(
    password="4231-rweq"
 )
 
+# Return list from dictionary
 def read_dict(C):
     cur = C.cursor()
     cur.execute("SELECT id, word, translation FROM dictionary;")
@@ -13,23 +16,28 @@ def read_dict(C):
     cur.close()
     return rows
 
+# Add word to dictionary
 def add_word(C, word, translation):
     cur = C.cursor()
     cur.execute(f"INSERT INTO dictionary (word, translation) VALUES ('{word}', '{translation}');")
     cur.close()
 
+# Remove word from dictionary
 def delete_word(C, ID):
     cur = C.cursor()
     cur.execute(f"DELETE FROM dictionary WHERE id = '{ID}';")
     cur.close()
 
+
+# Save/Commit changes to database
 def save_dict(C):
     cur = C.cursor()
     cur.execute("COMMIT;")
     cur.close()
 
 while True: ## REPL - Read Execute Program Loop
-    cmd = input("Command: ")
+    cmd = input("Commands: 'list', 'add', 'delete', 'quit'\n")
+    
     if cmd == "list":
         print(read_dict(conn))
 
