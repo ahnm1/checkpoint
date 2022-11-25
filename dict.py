@@ -6,7 +6,7 @@ conn = psycopg2.connect(
    host="localhost",
    database="dictionary",
    user="postgres",
-   password="*****"
+   password="******"
 )
 
 # Return list from dictionary
